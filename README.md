@@ -4,8 +4,7 @@
 
 This is a fork of akiel/datomic-free that uses Oracle jdk8 and improves caching during the image build
 
-Non-official Docker image for [Datomic Free Edition][1] based on the official
-[Java Image][2].
+Non-official Docker image for [Datomic Free Edition][1] based on Ubuntu Trusty and Oracle JDK 8.
 
 The use of Datomic Free Edition is governed by the terms of the Datomic Free
 Edition License which you can find [here][3]. By using this Docker image, you
@@ -50,6 +49,5 @@ available:
 * akiel/datomic-free:0.9.5173
 
 [1]: <https://my.datomic.com/downloads/free>
-[2]: <https://registry.hub.docker.com/u/library/java/>
 [3]: <https://my.datomic.com/datomic.com/datomic-free-edition-license.html>
 [4]: <https://docs.docker.com/userguide/dockervolumes/#volume>
