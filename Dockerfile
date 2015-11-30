@@ -1,5 +1,4 @@
 FROM ubuntu:trusty
-#FROM java:openjdk-7
 
 MAINTAINER Thomas Spellman <thos37@gmail.com>
 
@@ -14,10 +13,11 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer
 RUN apt-get install -y unzip curl
 
-ENV DATOMIC_VERSION 0.9.5302
+ENV DATOMIC_VERSION 0.9.5327
 
-RUN curl -L -o /tmp/datomic.zip https://my.datomic.com/downloads/free/${DATOMIC_VERSION}
+# using curl seems to work better with docker build caching
 #ADD https://my.datomic.com/downloads/free/${DATOMIC_VERSION} /tmp/datomic.zip
+RUN curl -L -o /tmp/datomic.zip https://my.datomic.com/downloads/free/${DATOMIC_VERSION}
 
 RUN unzip /tmp/datomic.zip
 RUN rm /tmp/datomic.zip
@@ -26,11 +26,13 @@ WORKDIR datomic-free-${DATOMIC_VERSION}
 
 RUN cp config/samples/free-transactor-template.properties transactor.properties
 
-#RUN sed "s/host=localhost/host=0.0.0.0/" -i transactor.properties
-#RUN sed "/host=0.0.0.0/a alt-host=datomicdb" -i transactor.properties
-RUN sed "s/host=localhost/host=datomicdb/" -i transactor.properties
-RUN sed "/host=datomicdb/a alt-host=127.0.0.1" -i transactor.properties
+# for docker, listen on all interfaces
+RUN sed "s/host=localhost/host=0.0.0.0/" -i transactor.properties
 
+# also listen on the docker-created link host name
+RUN sed "/host=0.0.0.0/a alt-host=datomic-free" -i transactor.properties
+
+# smaller to run better on small virtual machines
 RUN sed "s/memory-index-max=256m/memory-index-max=128m/" -i transactor.properties
 
 RUN mkdir /data

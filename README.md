@@ -1,12 +1,14 @@
 # Datomic Free Edition
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/akiel/datomic-free.svg)](https://hub.docker.com/r/akiel/datomic-free/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/akiel/datomic-free.svg)](https://hub.docker.com/r/thosmos/datomic-free/)
+
+This is a fork of akiel/datomic-free that uses Oracle jdk8 and improves caching during the image build
 
 Non-official Docker image for [Datomic Free Edition][1] based on the official
 [Java Image][2].
 
-The use of Datomic Free Edition is governed by the terms of the Datomic Free 
-Edition License which you can find [here][3]. By using this Docker image, you 
+The use of Datomic Free Edition is governed by the terms of the Datomic Free
+Edition License which you can find [here][3]. By using this Docker image, you
 are agreeing to those terms.
 
 ## Usage
@@ -14,7 +16,7 @@ are agreeing to those terms.
 To start a container with Docker running at localhost, the following command
 is sufficient
 
-    docker run -d -p 4334-4336:4334-4336 --name datomic-free akiel/datomic-free
+    docker run -d -p 4334-4336:4334-4336 --name datomic-free thosmos/datomic-free
 
 You can access your databases through this URIs
 
@@ -30,7 +32,7 @@ and access your databases through the URIs
     datomic:free://<DOCKER_HOST>:4334/<DB_NAME>
 
 The image exposes two volumes, one `/data` and one `/log` volume. If you give
-your containers names like in the commands above, you don't have to bind 
+your containers names like in the commands above, you don't have to bind
 something to the `/data` volume. Your data will be preserved over container
 restarts. But it is recommended to use a volume container or host directory as
 described in [Managing Data in Containers][4].
